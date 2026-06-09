@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Ram Sagarla — AI/ML Engineer & Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a08;
+    --surface: #111110;
+    --border: #1e1e1c;
+    --accent: #c8a96e;
+    --accent2: #7eb8a4;
+    --text: #e8e4dc;
+    --muted: #6b6860;
+    --bright: #f5f0e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.3s, height 0.3s;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 60px 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(13px, 1.3vw, 17px);
+    font-weight: 600;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-bio {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 400px;
+    line-height: 1.9;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .hero-bio strong { color: var(--text); font-weight: 500; }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--bright);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { color: var(--bg); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-visual {
+    position: relative;
+    width: 320px; height: 420px;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.6s forwards;
+  }
+  .photo-frame {
+    width: 100%; height: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #111110 0%, #1a1a18 100%);
+  }
+  .photo-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+  }
+  .photo-hint {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 20px;
+  }
+  .frame-deco {
+    position: absolute;
+    width: 320px; height: 420px;
+    border: 1px solid rgba(200,169,110,0.2);
+    top: 16px; left: 16px;
+    pointer-events: none;
+  }
+  .hero-stats {
+    position: absolute;
+    bottom: -40px; right: -20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex; gap: 32px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--bright);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Ticker */
+  .ticker {
+    background: var(--accent);
+    padding: 12px 0;
+    overflow: hidden;
+    position: relative;
+    margin-top: 100px;
+  }
+  .ticker-track {
+    display: flex;
+    animation: ticker 28s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--bg);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0 40px;
+  }
+  .ticker-sep { color: rgba(10,10,8,0.4); }
+
+  /* Sections */
+  section { padding: 100px 60px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 300;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 6px;
+  }
+
+  /* About */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.9;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-details { display: grid; gap: 0; }
+  .detail-row {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 24px;
+  }
+  .detail-key {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-width: 100px;
+    padding-top: 2px;
+  }
+  .detail-val { font-size: 13px; color: var(--text); }
+  .detail-val a { color: var(--accent2); text-decoration: none; }
+  .detail-val a:hover { color: var(--accent); }
+
+  /* Skills */
+  #skills { background: var(--bg); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .skill-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: none;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .skill-card:hover { border-color: rgba(200,169,110,0.3); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    transition: all 0.2s;
+  }
+  .skill-card:hover .tag { border-color: rgba(200,169,110,0.2); color: var(--accent); }
+
+  /* Experience / Internships */
+  #experience { background: var(--surface); }
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateY(0); }
+  .timeline-dot {
+    position: absolute;
+    left: -44px; top: 8px;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .timeline-dot::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 50%;
+  }
+  .timeline-period {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .timeline-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 4px;
+  }
+  .timeline-company { font-size: 13px; color: var(--accent2); margin-bottom: 16px; }
+  .timeline-desc { font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 600px; }
+  .timeline-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  /* Projects */
+  #projects { background: var(--bg); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: none;
+  }
+  .project-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-2px); }
+  .project-card::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.4s;
+  }
+  .project-card:hover::after { width: 100%; }
+  .project-num {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .project-link {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: letter-spacing 0.3s;
+  }
+  .project-link:hover { letter-spacing: 0.2em; }
+  .project-card-bg {
+    position: absolute;
+    right: -20px; bottom: -30px;
+    font-family: 'Syne', sans-serif;
+    font-size: 120px;
+    font-weight: 800;
+    color: rgba(200,169,110,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Certifications */
+  #certifications { background: var(--surface); }
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .cert-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .cert-card:hover { border-color: rgba(200,169,110,0.3); }
+  .cert-issuer {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .cert-date { font-size: 11px; color: var(--muted); }
+  .cert-badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  /* Education */
+  #education { background: var(--bg); }
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .edu-card {
+    border: 1px solid var(--border);
+    padding: 36px;
+    background: var(--surface);
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .edu-card:hover { border-color: rgba(200,169,110,0.3); }
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s;
+  }
+  .edu-card:hover::before { transform: scaleY(1); }
+  .edu-year {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .edu-school { font-size: 13px; color: var(--accent2); margin-bottom: 12px; }
+  .edu-desc { font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .edu-score {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 14px;
+    border: 1px solid rgba(200,169,110,0.3);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* Contact */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+    padding: 120px 60px;
+  }
+  .contact-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 300;
+    color: var(--bright);
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 48px;
+  }
+  .contact-heading em { font-style: italic; color: var(--accent); }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    color: var(--accent);
+    border-color: rgba(200,169,110,0.4);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+  }
+  .footer-copy { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .footer-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 120px 24px 60px; }
+    .hero-right { display: none; }
+    .ticker { margin-top: 0; }
+    section { padding: 72px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">SS<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">✦ Open to opportunities · 2026 Graduate</p>
+    <h1 class="hero-name">Sai Ram<br><em>Sagarla</em></h1>
+    <p class="hero-title">AI/ML Engineer · Data Analyst · Full-Stack Developer</p>
+    <p class="hero-bio">
+      Final-year B.Tech <strong>Computer Science (AI & ML)</strong> student with a strong academic record of <strong>8.96 CGPA</strong>. Experienced in machine learning, data analytics, and full-stack development. Passionate about building intelligent solutions that bridge the gap between data and real-world impact.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary"><span>View Projects</span></a>
+      <a href="#contact" class="btn-outline">Get in Touch →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="photo-frame">
+        <img src="images/ima.jpeg" alt="Sagarla Sai Ram" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+      </div>
+      <div class="frame-deco"></div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">8.96</span>
+          <span class="stat-label">CGPA</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">6+</span>
+          <span class="stat-label">Certs</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">2+</span>
+          <span class="stat-label">Internships</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Machine Learning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Data Analytics <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Artificial Intelligence <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Tableau <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Full-Stack Development <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Stable Diffusion <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Generative AI <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Machine Learning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Data Analytics <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Artificial Intelligence <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Tableau <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Full-Stack Development <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Stable Diffusion <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Generative AI <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm <strong>Sai Ram Sagarla</strong> — a final-year B.Tech student specializing in <strong>Artificial Intelligence and Machine Learning</strong> at Siddartha Institute of Science and Technology, Puttur. I graduated with a CGPA of <strong>8.96/10</strong>, reflecting a deep commitment to academic excellence and technical growth.</p>
+      <p>My passion lies at the intersection of <strong>data, AI, and meaningful software</strong>. From building stock prediction models and loan approval systems in Python to creating rich data visualizations in Tableau, I love turning raw data into decisions that matter.</p>
+      <p>I've applied these skills hands-on through internships in <strong>Artificial Intelligence at Dexterity Edtech</strong> and through Accenture's <strong>Data Analytics & Visualization Job Simulation</strong>. I'm driven, fast-learning, and always building something new.</p>
+    </div>
+    <div class="about-details reveal">
+      <div class="detail-row">
+        <span class="detail-key">Name</span>
+        <span class="detail-val">Sagarla Sai Ram</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">Degree</span>
+        <span class="detail-val">B.Tech CS (AI & ML) — 2026</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">College</span>
+        <span class="detail-val">SIST, Puttur</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">Email</span>
+        <span class="detail-val"><a href="mailto:sagarlasairam41169@gmail.com">sagarlasairam41169@gmail.com</a></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">LinkedIn</span>
+        <span class="detail-val"><a href="https://www.linkedin.com/in/sagarla-sai-ram-190a34269" target="_blank">sagarla-sai-ram</a></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">GitHub</span>
+        <span class="detail-val"><a href="https://github.com/Sai-Ram-Sagarla-23" target="_blank">Sai-Ram-Sagarla-23</a></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-key">Status</span>
+        <span class="detail-val" style="color: var(--accent2);">● Available for Roles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <span class="skill-icon">🤖</span>
+      <div class="skill-name">AI & Machine Learning</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">Stable Diffusion</span>
+        <span class="tag">ComfyUI</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">📊</span>
+      <div class="skill-name">Data Analytics</div>
+      <div class="skill-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Excel</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Storytelling</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">⚡</span>
+      <div class="skill-name">Frontend</div>
+      <div class="skill-tags">
+        <span class="tag">React</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Tailwind</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🛠</span>
+      <div class="skill-name">Backend</div>
+      <div class="skill-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">Python</span>
+        <span class="tag">Java</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">Express</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🗄️</span>
+      <div class="skill-name">Database</div>
+      <div class="skill-tags">
+        <span class="tag">MySQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Firebase</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">☁️</span>
+      <div class="skill-name">Cloud & DevOps</div>
+      <div class="skill-tags">
+        <span class="tag">AWS</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Git</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">April 2024 — May 2024</p>
+      <h3 class="timeline-role">AI Intern</h3>
+      <p class="timeline-company">Dexterity Edtech Pvt. Ltd.</p>
+      <p class="timeline-desc">Completed an intensive Artificial Intelligence internship program covering core AI concepts, model development, and practical implementation. Worked on two ML projects: a <strong>Stock Price Prediction</strong> system using Python (Minor Project) and a <strong>Loan Approval Prediction</strong> model (Major Project), applying real-world datasets and machine learning pipelines. Issued with both Certificate of Internship and Certificate of Project Completion.</p>
+      <div class="timeline-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Data Preprocessing</span>
+        <span class="tag">Prediction Models</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">December 2024</p>
+      <h3 class="timeline-role">Data Analytics & Visualization — Job Simulation</h3>
+      <p class="timeline-company">Accenture North America (via Forage)</p>
+      <p class="timeline-desc">Completed Accenture's virtual job simulation in Data Analytics and Visualization. Performed end-to-end analytical tasks including Project Understanding, Data Cleaning & Modelling, Data Visualization & Storytelling, and Presenting findings to the Client. Gained hands-on exposure to industry-level analytics workflows used by Accenture's consulting teams.</p>
+      <div class="timeline-tags">
+        <span class="tag">Data Analytics</span>
+        <span class="tag">Data Cleaning</span>
+        <span class="tag">Visualization</span>
+        <span class="tag">Storytelling</span>
+        <span class="tag">Client Presentation</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-period">July 2025</p>
+      <h3 class="timeline-role">Data Analytics with Tableau — Short-Term Internship</h3>
+      <p class="timeline-company">SmartBridge Educational Services · APSCHE Certified</p>
+      <p class="timeline-desc">Completed a 2-month virtual internship on Data Analytics with Tableau, organized by SmartBridge Educational Services Pvt. Ltd. in collaboration with the Andhra Pradesh State Council of Higher Education. Built interactive dashboards and gained proficiency in Tableau for deriving actionable insights from complex datasets. Certificate ID: EXT-APSCHE_DA-58198.</p>
+      <div class="timeline-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Data Analytics</span>
+        <span class="tag">Dashboard Design</span>
+        <span class="tag">APSCHE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <p class="project-num">Project 01</p>
+      <h3 class="project-title">Heritage Treasures — UNESCO World Heritage Sites Analysis</h3>
+      <p class="project-desc">An in-depth data analysis and visualization project built in Tableau, exploring UNESCO World Heritage Sites globally. The project uncovers patterns across regions, categories, inscription years, and country distributions — presenting rich interactive dashboards that tell the story of our planet's cultural and natural heritage.</p>
+      <div class="project-stack">
+        <span class="tag">Tableau</span>
+        <span class="tag">Data Analytics</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">UNESCO Dataset</span>
+      </div>
+      <a href="https://github.com/Sai-Ram-Sagarla-23/Heritage-Treasures-An-In-Depth-Analysis-of-UNESCO-World-Heritage-Sites-in-Tableau" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="project-card-bg">01</div>
+    </div>
+    <div class="project-card reveal">
+      <p class="project-num">Project 02</p>
+      <h3 class="project-title">Image Generation using Stable Diffusion & ComfyUI</h3>
+      <p class="project-desc">Implemented a generative AI pipeline for image synthesis using Stable Diffusion integrated with ComfyUI as the visual workflow interface. The project demonstrates prompt engineering, model configuration, and node-based generation workflows — exploring the frontier of text-to-image generative AI and its creative applications.</p>
+      <div class="project-stack">
+        <span class="tag">Stable Diffusion</span>
+        <span class="tag">ComfyUI</span>
+        <span class="tag">Generative AI</span>
+        <span class="tag">Python</span>
+        <span class="tag">Prompt Engineering</span>
+      </div>
+      <a href="https://github.com/Sai-Ram-Sagarla-23/Image-generation-using-stable-diffusion-and-compyui" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="project-card-bg">02</div>
+    </div>
+    <div class="project-card reveal">
+      <p class="project-num">Project 03</p>
+      <h3 class="project-title">Stock Price Prediction using Machine Learning</h3>
+      <p class="project-desc">Built during the Dexterity Edtech internship, this project uses Python and machine learning algorithms to predict stock price movements. The pipeline includes data collection, feature engineering, model training and evaluation — demonstrating practical ML application in financial forecasting.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Data Preprocessing</span>
+      </div>
+      <a href="#" class="project-link">Minor Project — Dexterity Edtech</a>
+      <div class="project-card-bg">03</div>
+    </div>
+    <div class="project-card reveal">
+      <p class="project-num">Project 04</p>
+      <h3 class="project-title">Loan Approval Prediction using Machine Learning</h3>
+      <p class="project-desc">A major project developed during the AI internship at Dexterity Edtech. This model predicts loan approval likelihood based on applicant data, using classification algorithms, feature selection, and model tuning. The project showcases end-to-end ML workflow from data preparation to deployment-ready predictions.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span>
+        <span class="tag">Classification</span>
+        <span class="tag">Feature Engineering</span>
+        <span class="tag">ML Pipeline</span>
+      </div>
+      <a href="#" class="project-link">Major Project — Dexterity Edtech</a>
+      <div class="project-card-bg">04</div>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-badge">🐍</div>
+      <p class="cert-issuer">Udemy</p>
+      <h3 class="cert-name">The Complete Python Bootcamp — Zero to Hero</h3>
+      <p class="cert-date">Dec 24, 2024 · 22 Total Hours · Jose Portilla & Pierian Training</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🤖</div>
+      <p class="cert-issuer">Dexterity Edtech</p>
+      <h3 class="cert-name">Certificate of Internship — Artificial Intelligence</h3>
+      <p class="cert-date">April 2024 – May 2024 · Ref: DXIC115</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🏆</div>
+      <p class="cert-issuer">Dexterity Edtech</p>
+      <h3 class="cert-name">Certificate of Project Completion — ML Projects</h3>
+      <p class="cert-date">June 15, 2024 · Stock Price & Loan Approval Prediction · Ref: DXPC115</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🎓</div>
+      <p class="cert-issuer">Dexterity Edtech</p>
+      <h3 class="cert-name">Certificate of Course Completion — AI Training</h3>
+      <p class="cert-date">Apr 12 – May 12, 2024 · Ref: DXCC348</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🔬</div>
+      <p class="cert-issuer">Cisco Networking Academy</p>
+      <h3 class="cert-name">Introduction to Data Science</h3>
+      <p class="cert-date">Sep 03, 2025 · AI, ML & Data Analytics roles</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">📊</div>
+      <p class="cert-issuer">Cisco Networking Academy</p>
+      <h3 class="cert-name">Data Analytics Essentials</h3>
+      <p class="cert-date">Sep 01, 2025 · Excel, SQL, Tableau — Hands-on Labs</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">💼</div>
+      <p class="cert-issuer">Accenture × Forage</p>
+      <h3 class="cert-name">Data Analytics & Visualization Job Simulation</h3>
+      <p class="cert-date">Dec 25, 2024 · Project Understanding, Cleaning, Visualization & Storytelling</p>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-badge">🏛️</div>
+      <p class="cert-issuer">APSCHE × SmartBridge</p>
+      <h3 class="cert-name">Data Analytics with Tableau — 2-Month Internship</h3>
+      <p class="cert-date">Jul 21, 2025 · Cert ID: EXT-APSCHE_DA-58198</p>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <p class="edu-year">2022 — 2026</p>
+      <h3 class="edu-degree">B.Tech — Computer Science (AI & ML)</h3>
+      <p class="edu-school">Siddartha Institute of Science and Technology, Puttur</p>
+      <p class="edu-desc">Specialization in Artificial Intelligence and Machine Learning. Relevant coursework: Data Structures, Algorithms, DBMS, Operating Systems, Computer Networks, Machine Learning, Deep Learning, Software Engineering.</p>
+      <span class="edu-score">CGPA: 8.96 / 10.0</span>
+    </div>
+    <div class="edu-card reveal">
+      <p class="edu-year">Intermediate (MPC)</p>
+      <h3 class="edu-degree">Mathematics, Physics, Chemistry</h3>
+      <p class="edu-school">Vamsi Junior College, Srikalahasti</p>
+      <p class="edu-desc">Completed Intermediate with strong focus on Mathematics, Physics and Chemistry — building a rigorous analytical foundation for engineering studies.</p>
+      <span class="edu-score">937 Marks</span>
+    </div>
+    <div class="edu-card reveal">
+      <p class="edu-year">SSC (Class X)</p>
+      <h3 class="edu-degree">Secondary School Certificate</h3>
+      <p class="edu-school">S S Vivekananda High School, Srikalahasti</p>
+      <p class="edu-desc">Completed secondary education with a consistent academic record. Graduated during the challenging COVID-19 period, demonstrating adaptability and determination.</p>
+      <span class="edu-score">600 Marks</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <p class="contact-eyebrow reveal">✦ Let's build something together</p>
+  <h2 class="contact-heading reveal">Get In<br><em>Touch</em></h2>
+  <div class="contact-links reveal">
+    <a href="mailto:sagarlasairam41169@gmail.com" class="contact-link">✉ Email Me</a>
+    <a href="https://www.linkedin.com/in/sagarla-sai-ram-190a34269" target="_blank" class="contact-link">⟶ LinkedIn</a>
+    <a href="https://github.com/Sai-Ram-Sagarla-23" target="_blank" class="contact-link">⌘ GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2026 Sagarla Sai Ram. All rights reserved.</p>
+  <p class="footer-name">Crafted with ♥ & Code</p>
+</footer>
+
+<script>
+  // Photo embed helper — if the image fails to load, show initials placeholder
+  const heroImg = document.querySelector('.photo-frame img');
+  if (heroImg) {
+    heroImg.onerror = function() {
+      this.outerHTML = `<div class="photo-placeholder"><div class="photo-initials">SR</div><p class="photo-hint">Sagarla Sai Ram</p></div>`;
+    };
+  }
+
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .skill-card, .project-card, .edu-card, .cert-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px';
+      cursor.style.height = '10px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80 * (Array.from(reveals).indexOf(entry.target) % 4));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+  timelineItems.forEach(el => tlObserver.observe(el));
+</script>
+</body>
+</html>
